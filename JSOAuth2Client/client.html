@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>oauth2 client</title>
+    <script src="js/libs/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<script type="text/javascript">
+    function getUserInfo() {
+        //var url = "https://127.0.0.1/oauth2/userinfo";
+		 var url = "http://192.168.17.145:8080/oauth2/userinfo";
+
+        var authHeader = "Bearer " + $("#access_token").val();
+        $.ajax({
+            url: url,
+            crossDomain: true,
+            success: function (data, textStatus) {
+                console.log('received ', data);
+                $("#userinfo").html(data);
+            },
+            dataType: "text",
+            headers: {
+                "Authorization": authHeader
+            }
+
+
+        });
+    }
+</script>
+
+<!--  <a href="https://127.0.0.1/oauth2/authorize?redirect_uri=http://127.0.0.1:9000/client.html&client_id=9a39a2c2-54da-4e80-aa16-641bdbbd1f1f&response_type=code">authorize</a> -->
+<a href="http://192.168.17.145:8080/oauth2/authorize?redirect_uri=http://127.0.0.1:9000/client.html&client_id=9a39a2c2-54da-4e80-aa16-641bdbbd1f1f&response_type=code">authorize</a>
+
+<br>
+<br>
+<br>
+
+<!--  <form id="token" action="https://127.0.0.1/oauth2/token" method="post">  -->
+<form id="token" action="http://192.168.17.145:8080/oauth2/token" method="post">
+    client_id <input value="9a39a2c2-54da-4e80-aa16-641bdbbd1f1f" name="client_id"/> <br>
+    redirect_uri <input value="http://127.0.0.1:9000/client.html" name="redirect_uri"/> <br>
+    code <input name="code"/> <br>
+    grant_type <input value="authorization_code" name="grant_type"/> <br>
+    uri <input value="http://www.google.com" name="uri"/> <br>
+    client_secret <input value="e4d687cd-a1cc-41f7-b2a9-9d3a2555db30" name="client_secret"/> <br>
+    scope<input value="porfile" name="scope"/> <br>
+    state <input value="123" name="state"/> <br>
+    <input type="submit" value="get access token"> <br>
+</form>
+
+
+<br>
+<br>
+<br>
+
+
+access_token <input id="access_token" value="" name="access_token"/> <br>
+<input type="button" onclick="getUserInfo()" value="getUserInfo"/> <br>
+
+<div id="userinfo">
+
+</div>
+</body>
+</html>
